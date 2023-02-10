@@ -1,4 +1,4 @@
-package com.dandelion.textcontrol.ui.screens
+package com.dandelion.textcontrol.ui.screens.enter
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

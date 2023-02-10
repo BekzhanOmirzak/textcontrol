@@ -1,4 +1,4 @@
-package com.dandelion.textcontrol.ui.screens
+package com.dandelion.textcontrol.ui.screens.enter
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +25,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dandelion.textcontrol.navigation.ENTER_SCREEN
-import com.dandelion.textcontrol.navigation.FIELD_OPTIONS
 import java.lang.NumberFormatException
 
 @Composable
@@ -68,9 +67,8 @@ fun EnterScreen(navController: NavController, vm: EnterVM = viewModel()) {
             onClick = {
                 try {
                     isCountValid = true
-                    fieldCount.toInt()
-                    navController.navigate(FIELD_OPTIONS) {
-                        popUpTo(ENTER_SCREEN) { inclusive = true }
+                    navController.navigate("field_options/${fieldCount.toInt()}") {
+                        popUpTo(ENTER_SCREEN) { inclusive = false }
                     }
                 } catch (exception: NumberFormatException) {
                     isCountValid = false
