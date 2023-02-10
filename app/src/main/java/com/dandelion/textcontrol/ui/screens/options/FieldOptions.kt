@@ -19,8 +19,8 @@ data class FieldOptions(
     var borderWidth: Dp = 0.dp,
     var borderColor: Color = Color.Transparent,
     var shapeRadius: Dp = 0.dp,
-    var positionX: Int? = null, // if null then not apply
-    var positionY: Int? = null,
+    var positionX: Dp = 0.dp,
+    var positionY: Dp = 0.dp,
     var lineSpacing: Dp = 0.dp,
     var lineCount: Int = 0,
     var isScrollable: Boolean = false,

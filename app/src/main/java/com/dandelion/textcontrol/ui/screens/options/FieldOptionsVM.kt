@@ -6,24 +6,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.godaddy.android.colorpicker.HsvColor
+import com.godaddy.android.colorpicker.HsvColor.Companion
 
 class FieldOptionsVM : ViewModel() {
     val fieldCount = mutableStateOf(0)
     val fieldOptions = mutableListOf<FieldOptions>()
     var currentFieldOption = FieldOptions()
 
-    val isInputEnabled = mutableStateOf(true)
-    val content = mutableStateOf("")
-    val fontSize = mutableStateOf(10)
-    val textColor = mutableStateOf(HsvColor.DEFAULT)
-    val hintText = mutableStateOf("")
-    val hintTextColor = mutableStateOf(HsvColor.DEFAULT)
-    val background = mutableStateOf(HsvColor.DEFAULT)
-    val borderWidth = mutableStateOf(0.dp)
-    val borderColor = mutableStateOf(Color.Transparent)
-    val shapeRadius = mutableStateOf(0.dp)
-    val positionX = mutableStateOf(null) // if null then not apply
-    val positionY = mutableStateOf(null)
+    val isInputEnabled = mutableStateOf(true)   // +
+    val content = mutableStateOf("")            // +
+    val fontSize = mutableStateOf(10)           // +
+    val textColor = mutableStateOf(HsvColor.DEFAULT)  // +
+    val hintText = mutableStateOf("")           // +
+    val hintTextColor = mutableStateOf(HsvColor.DEFAULT) // +
+    val background = mutableStateOf(HsvColor.DEFAULT) // +
+    val borderWidth = mutableStateOf(0)         // +
+    val borderColor = mutableStateOf(HsvColor.DEFAULT) // +
+    val shapeRadius = mutableStateOf(0)         // +
+    val positionX = mutableStateOf("")          // +
+    val positionY = mutableStateOf("")          // +
     val lineSpacing = mutableStateOf(0.dp)
     val lineCount = mutableStateOf(0)
     val isScrollable = mutableStateOf(false)
@@ -40,6 +41,16 @@ class FieldOptionsVM : ViewModel() {
         fieldOptions.add(currentFieldOption)
         isInputEnabled.value = true
         content.value = ""
+        fontSize.value = 10
+        textColor.value = HsvColor.DEFAULT
+        hintText.value = ""
+        hintTextColor.value = Companion.DEFAULT
+        background.value = Companion.DEFAULT
+        borderWidth.value = 0
+        borderColor.value = Companion.DEFAULT
+        shapeRadius.value = 0
+        positionX.value = ""
+        positionY.value = ""
         currentFieldOption = FieldOptions()
     }
 }

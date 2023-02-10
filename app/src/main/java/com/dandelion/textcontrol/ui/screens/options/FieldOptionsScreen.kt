@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -32,13 +33,9 @@ import com.chargemap.compose.numberpicker.NumberPicker
 import com.dandelion.textcontrol.navigation.RESULT_SCREEN
 import com.godaddy.android.colorpicker.ClassicColorPicker
 import com.godaddy.android.colorpicker.HsvColor
-
-/**
- * 1) add a lazylist for every option of our field
- * 2) create an array of our options in viewmodel with size that we pass from EnterScreen
- * 3) pass resulted array of options to result screen as json and parse it there
- *
- * **/
+import java.lang.NumberFormatException
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun FieldOptionsScreen(
@@ -47,12 +44,13 @@ fun FieldOptionsScreen(
     vm: FieldOptionsVM = viewModel()
 ) {
     var addedFieldCount by remember { mutableStateOf(0) }
+    val scrollState = rememberScrollState()
     vm.fieldCount.value = fieldCount
     Column(
         Modifier
             .fillMaxSize()
             .background(Color.White)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(modifier = Modifier.padding(top = 16.dp), text = "Enter first field info")
@@ -97,10 +95,13 @@ fun FieldOptionsScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(text = "textColor")
-            ClassicColorPicker(Modifier.size(200.dp), color = vm.textColor.value, onColorChanged = { color: HsvColor ->
-                vm.currentFieldOption.textColor = color.toColor()
-                vm.textColor.value = color
-            })
+            ClassicColorPicker(
+                Modifier.size(200.dp),
+                color = vm.textColor.value,
+                onColorChanged = { color: HsvColor ->
+                    vm.currentFieldOption.textColor = color.toColor()
+                    vm.textColor.value = color
+                })
         }
         Row(
             Modifier.fillMaxWidth(),
@@ -137,18 +138,106 @@ fun FieldOptionsScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(text = "background")
+            ClassicColorPicker(
+                Modifier.size(200.dp),
+                color = vm.background.value,
+                onColorChanged = { color: HsvColor ->
+                    vm.currentFieldOption.background = color.toColor()
+                    vm.background.value = color
+                })
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = "borderWidth")
+            NumberPicker(value = vm.borderWidth.value, onValueChange = {
+                vm.currentFieldOption.borderWidth = it.dp
+                vm.borderWidth.value = it
+            }, range = (0..10))
+        }
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = "borderColor")
             ClassicColorPicker(Modifier.size(200.dp), color = vm.background.value, onColorChanged = { color: HsvColor ->
-                vm.currentFieldOption.background = color.toColor()
-                vm.background.value = color
+                vm.currentFieldOption.borderColor = color.toColor()
+                vm.borderColor.value = color
             })
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = "shapeRadius")
+            NumberPicker(value = vm.shapeRadius.value, onValueChange = {
+                vm.currentFieldOption.shapeRadius = it.dp
+                vm.shapeRadius.value = it
+            }, range = (1..10))
+        }
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            var isNumberValid by remember {
+                mutableStateOf(true)
+            }
+            Text(text = "positionX and positionY")
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Row {
+                    TextField(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .padding(end = 16.dp),
+                        value = vm.positionX.value,
+                        isError = !isNumberValid,
+                        onValueChange = {
+                            try {
+                                vm.currentFieldOption.positionX = it.toInt().dp
+                                vm.positionX.value = it
+                            } catch (exception: NumberFormatException) {
+                                isNumberValid = false
+                            }
+                        })
+                    TextField(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .padding(start = 16.dp),
+                        value = vm.positionY.value,
+                        isError = !isNumberValid,
+                        onValueChange = {
+                            try {
+                                vm.currentFieldOption.positionY = it.toInt().dp
+                                vm.positionY.value = it
+                            } catch (exception: NumberFormatException) {
+                                isNumberValid = false
+                            }
+                        })
+                }
+                if (!isNumberValid) {
+                    Text(
+                        text = "Please, enter valid number",
+                        color = Color.Red
+                    )
+                }
+            }
         }
         Button(onClick = {
             if (vm.fieldCount.value - 1 == addedFieldCount) {
-                // TODO: nav to result screen
                 navController.navigate(RESULT_SCREEN)
                 vm.applyField()
             } else {
                 println(vm.fieldOptions)
+                MainScope().launch {
+                    scrollState.scrollTo(0)
+                }
                 vm.applyField()
                 addedFieldCount++
             }
