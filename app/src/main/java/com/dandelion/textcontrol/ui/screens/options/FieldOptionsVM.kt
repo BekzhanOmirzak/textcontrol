@@ -1,9 +1,6 @@
 package com.dandelion.textcontrol.ui.screens.options
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.godaddy.android.colorpicker.HsvColor
 import com.godaddy.android.colorpicker.HsvColor.Companion
@@ -13,29 +10,39 @@ class FieldOptionsVM : ViewModel() {
     val fieldOptions = mutableListOf<FieldOptions>()
     var currentFieldOption = FieldOptions()
 
-    val isInputEnabled = mutableStateOf(true)   // +
-    val content = mutableStateOf("")            // +
-    val fontSize = mutableStateOf(10)           // +
-    val textColor = mutableStateOf(HsvColor.DEFAULT)  // +
-    val hintText = mutableStateOf("")           // +
-    val hintTextColor = mutableStateOf(HsvColor.DEFAULT) // +
-    val background = mutableStateOf(HsvColor.DEFAULT) // +
-    val borderWidth = mutableStateOf(0)         // +
-    val borderColor = mutableStateOf(HsvColor.DEFAULT) // +
-    val shapeRadius = mutableStateOf(0)         // +
-    val positionX = mutableStateOf("")          // +
-    val positionY = mutableStateOf("")          // +
-    val lineSpacing = mutableStateOf(0.dp)
-    val lineCount = mutableStateOf(0)
-    val isScrollable = mutableStateOf(false)
-    val padding = mutableStateOf(PaddingValues(0.dp))
-    val alignment = mutableStateOf("")
-    val underlineWidth = mutableStateOf(0.dp)
-    val underlineColor = mutableStateOf(Color.Black)
-    val width = mutableStateOf(0.dp)
-    val height = mutableStateOf(0.dp)
-    val elevationColor = mutableStateOf(Color.White)
-    val elevationOffset = mutableStateOf(0f)
+    val isInputEnabled = mutableStateOf(true)        // +
+    val content = mutableStateOf("")                 // +
+    val fontSize = mutableStateOf(10)                // +
+    val textColor = mutableStateOf(HsvColor.DEFAULT)       // +
+    val hintText = mutableStateOf("")                // +
+    val hintTextColor = mutableStateOf(HsvColor.DEFAULT)   // +
+    val background = mutableStateOf(HsvColor.DEFAULT)      // +
+    val borderWidth = mutableStateOf(0)             // +
+    val borderColor = mutableStateOf(HsvColor.DEFAULT)     // +
+    val shapeRadius = mutableStateOf(0)             // +
+    val positionX = mutableStateOf("")              // +
+    val positionY = mutableStateOf("")              // +
+    val lineSpacing = mutableStateOf(0)             // +
+    val lineCount = mutableStateOf(1)               // +
+    val isScrollable = mutableStateOf(false)        // +
+    val paddingStart = mutableStateOf(0)            // +
+    val paddingTop = mutableStateOf(0)              // +
+    val paddingEnd = mutableStateOf(0)              // +
+    val paddingBottom = mutableStateOf(0)           // +
+    val isStartAlignment = mutableStateOf(true)     // +
+    val isCenterAlignment = mutableStateOf(false)   // +
+    val isEndAlignment = mutableStateOf(false)      // +
+    val underlineWidth = mutableStateOf(0)          // +
+    val underlineColor = mutableStateOf(HsvColor.DEFAULT) // +
+    val width = mutableStateOf("")                  // +
+    val height = mutableStateOf("")                 // +
+    val elevationColor = mutableStateOf(HsvColor.DEFAULT) // +
+    val elevationOffset = mutableStateOf(0)         // +
+    val isRegularFont = mutableStateOf(true)        // +
+    val maximumCharacters = mutableStateOf("")      // +
+    val executionDelay = mutableStateOf("")         // +
+    val isPassword = mutableStateOf(false)          // +
+    val isNumberKeyboard = mutableStateOf(false)    // +
 
     fun applyField() {
         fieldOptions.add(currentFieldOption)
