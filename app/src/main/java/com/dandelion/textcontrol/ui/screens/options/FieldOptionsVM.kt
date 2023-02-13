@@ -58,6 +58,27 @@ class FieldOptionsVM : ViewModel() {
         shapeRadius.value = 0
         positionX.value = ""
         positionY.value = ""
+        lineSpacing.value = 0
+        lineCount.value = 1
+        isScrollable.value = false
+        paddingStart.value = 0
+        paddingTop.value = 0
+        paddingEnd.value = 0
+        paddingBottom.value = 0
+        isStartAlignment.value = true
+        isCenterAlignment.value = false
+        isEndAlignment.value = false
+        underlineWidth.value = 0
+        underlineColor.value = Companion.DEFAULT
+        width.value = ""
+        height.value = ""
+        elevationColor.value = Companion.DEFAULT
+        elevationOffset.value = 0
+        isRegularFont.value = true
+        maximumCharacters.value = ""
+        executionDelay.value = ""
+        isPassword.value = false
+        isNumberKeyboard.value = false
         currentFieldOption = FieldOptions()
     }
 }

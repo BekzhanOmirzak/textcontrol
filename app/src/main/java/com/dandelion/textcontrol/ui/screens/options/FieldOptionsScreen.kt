@@ -19,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,10 +37,10 @@ import com.chargemap.compose.numberpicker.NumberPicker
 import com.dandelion.textcontrol.navigation.RESULT_SCREEN
 import com.dandelion.textcontrol.ui.theme.steagalFontMedium
 import com.dandelion.textcontrol.ui.theme.steagalFontRegular
+import com.dandelion.textcontrol.utils.toOrdinal
 import com.godaddy.android.colorpicker.ClassicColorPicker
 import com.godaddy.android.colorpicker.HsvColor
 import java.lang.NumberFormatException
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -50,6 +52,8 @@ fun FieldOptionsScreen(
 
     var addedFieldCount by remember { mutableStateOf(0) }
     val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+    val keyboardController = LocalFocusManager.current
 
     vm.fieldCount.value = fieldCount
     Column(
@@ -59,7 +63,7 @@ fun FieldOptionsScreen(
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(modifier = Modifier.padding(top = 16.dp), text = "Enter first field info")
+        Text(modifier = Modifier.padding(top = 16.dp), text = "Enter ${(addedFieldCount + 1).toOrdinal()} field info")
         Row(
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -512,10 +516,11 @@ fun FieldOptionsScreen(
                 vm.applyField()
             } else {
                 println(vm.fieldOptions)
-                MainScope().launch {
-                    scrollState.scrollTo(0)
+                coroutineScope.launch {
+                    scrollState.animateScrollTo(0)
                 }
                 vm.applyField()
+                keyboardController.clearFocus()
                 addedFieldCount++
             }
         }) {
