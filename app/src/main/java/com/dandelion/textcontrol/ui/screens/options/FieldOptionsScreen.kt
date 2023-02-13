@@ -189,7 +189,7 @@ fun FieldOptionsScreen(
             NumberPicker(value = vm.shapeRadius.value, onValueChange = {
                 vm.currentFieldOption.shapeRadius = it.dp
                 vm.shapeRadius.value = it
-            }, range = (1..10))
+            }, range = (0..20))
         }
         Row(
             Modifier.fillMaxWidth(),
