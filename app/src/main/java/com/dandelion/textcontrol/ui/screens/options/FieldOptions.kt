@@ -42,5 +42,5 @@ data class FieldOptions(
 	var executionDelay: Long = 0L,
 	var isPassword: Boolean = false,
 	var keyboardType: KeyboardType = KeyboardType.Text,
-	val urlOptions: UrlOptions = UrlOptions()
+	var urlOptions: UrlOptions = UrlOptions()
 )

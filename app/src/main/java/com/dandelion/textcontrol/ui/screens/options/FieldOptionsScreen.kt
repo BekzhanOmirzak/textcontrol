@@ -494,8 +494,112 @@ fun FieldOptionsScreen(
 			}
 		}
 
+		Column(
+			modifier = Modifier
+				.padding(10.dp)
+				.border(BorderStroke(1.dp, color = Color.Gray))
+				.padding(10.dp)
+		) {
+			Text(text = "URL")
+			val targetContainsInContent =
+				vm.urlTarget.value.isNotEmpty() && vm.content.value.contains(
+					vm.urlTarget.value
+				)
+			Row(verticalAlignment = Alignment.CenterVertically) {
+				OutlinedTextField(
+					value = vm.urlTarget.value,
+					onValueChange = { input ->
+						vm.urlTarget.value = input
+						vm.currentFieldOption.urlOptions.target = input
+					},
+					label = {
+						Text(text = "Target")
+					}
+				)
+				Spacer(modifier = Modifier.width(10.dp))
+				Box(
+					modifier = Modifier
+						.background(
+							color = if (targetContainsInContent)
+								Color.Green else Color.Red
+						)
+						.clip(
+							CircleShape
+						)
+						.size(8.dp)
+				)
+			}
+			Spacer(modifier = Modifier.height(10.dp))
+			if (targetContainsInContent)
+				Column(modifier = Modifier) {
+					OutlinedTextField(
+						value = vm.addressLink.value,
+						onValueChange = { input ->
+							vm.addressLink.value = input
+							vm.currentFieldOption.urlOptions.addressLink = input
+						},
+						label = {
+							Text(text = "Address Link")
+						}
+					)
 
+					Row(
+						Modifier.fillMaxWidth(),
+						verticalAlignment = Alignment.CenterVertically,
+						horizontalArrangement = Arrangement.SpaceEvenly
+					) {
+						Text(text = "url fontSize")
+						NumberPicker(value = vm.urlFontSize.value, onValueChange = {
+							vm.urlFontSize.value = it
+							vm.currentFieldOption.urlOptions.fontSize = it.sp
+						}, range = (10..90))
+					}
+					Row(
+						Modifier
+							.fillMaxWidth()
+							.padding(vertical = 10.dp),
+						verticalAlignment = Alignment.CenterVertically,
+						horizontalArrangement = Arrangement.SpaceEvenly
+					) {
+						Text(text = "url textColor")
+						ClassicColorPicker(
+							Modifier.size(200.dp),
+							color = vm.urlTxtColor.value,
+							onColorChanged = { color: HsvColor ->
+								vm.urlTxtColor.value = color
+								vm.currentFieldOption.urlOptions.textColor = color.toColor()
+							})
+					}
 
+					Row(
+						Modifier.fillMaxWidth(),
+						verticalAlignment = Alignment.CenterVertically,
+						horizontalArrangement = Arrangement.SpaceEvenly
+					) {
+						Text(text = "url underlineWidth")
+						NumberPicker(value = vm.urlUnderLineWidth.value, onValueChange = {
+							vm.urlUnderLineWidth.value = it
+							vm.currentFieldOption.urlOptions.underlineWidth = it.dp
+						}, range = (1..50))
+					}
+					Row(
+						Modifier
+							.fillMaxWidth()
+							.padding(vertical = 10.dp),
+						verticalAlignment = Alignment.CenterVertically,
+						horizontalArrangement = Arrangement.SpaceEvenly
+					) {
+						Text(text = "url underlineColor")
+						ClassicColorPicker(
+							Modifier.size(200.dp),
+							color = vm.urlUnderLineColor.value,
+							onColorChanged = { color: HsvColor ->
+								vm.urlUnderLineColor.value = color
+								vm.currentFieldOption.urlOptions.underlineColor = color.toColor()
+							})
+					}
+				}
+		}
 		Row(
 			Modifier.fillMaxWidth(),
 			verticalAlignment = Alignment.CenterVertically,
@@ -542,7 +646,6 @@ fun FieldOptionsScreen(
 	}
 }
 
-
 @Preview(showBackground = true)
 @Composable
 private fun PreviewTestingUrlSection() {
@@ -555,100 +658,7 @@ private fun PreviewTestingUrlSection() {
 		mutableStateOf("")
 	}
 
-	Column(
-		modifier = Modifier
-			.padding(10.dp)
-			.border(BorderStroke(1.dp, color = Color.Gray))
-			.padding(10.dp)
-	) {
-		Text(text = "URL")
-		Row(verticalAlignment = Alignment.CenterVertically) {
-			OutlinedTextField(
-				value = targetTxtForUrl,
-				onValueChange = { input ->
-					targetTxtForUrl = input
-				},
-				label = {
-					Text(text = "Target")
-				}
-			)
-			Spacer(modifier = Modifier.width(10.dp))
-			Box(
-				modifier = Modifier
-					.background(color = if (targetTxtForUrl.isNotEmpty()) Color.Green else Color.Red)
-					.clip(
-						CircleShape
-					)
-					.size(8.dp)
-			)
-		}
-		Spacer(modifier = Modifier.height(10.dp))
-		OutlinedTextField(
-			value = addressLink,
-			onValueChange = { input ->
-				addressLink = input
-			},
-			label = {
-				Text(text = "Address Link")
-			}
-		)
 
-		Row(
-			Modifier.fillMaxWidth(),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceEvenly
-		) {
-			Text(text = "url fontSize")
-			NumberPicker(value = 0, onValueChange = {
-//				vm.currentFieldOption.fontSize = it.sp
-//				vm.fontSize.value = it
-			}, range = (10..90))
-		}
-		Row(
-			Modifier
-				.fillMaxWidth()
-				.padding(vertical = 10.dp),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceEvenly
-		) {
-			Text(text = "url textColor")
-			ClassicColorPicker(
-				Modifier.size(200.dp),
-				color = Color.Red,
-				onColorChanged = { color: HsvColor ->
-//					vm.currentFieldOption.textColor = color.toColor()
-//					vm.textColor.value = color
-				})
-		}
-
-		Row(
-			Modifier.fillMaxWidth(),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceEvenly
-		) {
-			Text(text = "url underlineWidth")
-			NumberPicker(value = 0, onValueChange = {
-
-			}, range = (1..50))
-		}
-		Row(
-			Modifier
-				.fillMaxWidth()
-				.padding(vertical = 10.dp),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceEvenly
-		) {
-			Text(text = "url underlineColor")
-			ClassicColorPicker(
-				Modifier.size(200.dp),
-				color = Color.Red,
-				onColorChanged = { color: HsvColor ->
-//					vm.currentFieldOption.underlineColor = color.toColor()
-//					vm.underlineColor.value = color
-				})
-		}
-
-	}
 }
 
 @Preview(showBackground = true)

@@ -7,8 +7,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 data class UrlOptions(
-	val target: String = "",
-	val addressLink: String = "https://www.google.com/",
+	var target: String = "",
+	var addressLink: String = "https://www.google.com/",
 	var fontSize: TextUnit = 10.sp,
 	var textColor: Color = Color.Black,
 	var underlineWidth: Dp = 0.dp,
