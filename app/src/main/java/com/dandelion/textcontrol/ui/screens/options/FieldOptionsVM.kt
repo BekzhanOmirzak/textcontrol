@@ -43,6 +43,7 @@ class FieldOptionsVM : ViewModel() {
     val executionDelay = mutableStateOf("")         // +
     val isPassword = mutableStateOf(false)          // +
     val isNumberKeyboard = mutableStateOf(false)    // +
+	val urlTarget= mutableStateOf("")
 
     fun applyField() {
         fieldOptions.add(currentFieldOption)
