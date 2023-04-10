@@ -1,0 +1,3 @@
+[submodule "green-wallet-android-source"]
+	path = green-wallet-android-source
+	url = https://github.com/Green-App-Development/green-wallet-android-source
